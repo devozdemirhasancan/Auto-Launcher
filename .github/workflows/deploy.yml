@@ -3,10 +3,23 @@ name: Deploy Patch
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g. 1.2.0)"
+        required: true
+        default: "1.0.0"
+      build_id:
+        description: "Build identifier (e.g. build123)"
+        required: true
+        default: "build000"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.event.inputs.version || '1.0.0' }}
+      BUILD_ID: ${{ github.event.inputs.build_id || 'build000' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -17,8 +30,15 @@ jobs:
     - name: Build patcher
       run: cd tools/patcher && cargo build --release
 
-    - name: Generate patch (example)
-      run: cd tools/patcher && ./target/release/patcher CanartWorks stable ${{ env.VERSION }} ${{ env.BUILD_ID }} releases/build_outputs/${{ env.VERSION }}
+    - name: Generate patch
+      run: |
+        cd tools/patcher
+        ./target/release/patcher \
+          CanartWorks \
+          stable \
+          "${{ env.VERSION }}" \
+          "${{ env.BUILD_ID }}" \
+          "../releases/build_outputs/${{ env.VERSION }}"
 
     - name: Upload to patch server
       run: |
@@ -29,7 +49,4 @@ jobs:
 
     - name: Validate deployment
       run: |
-        # Check if URLs are reachable
-        echo "Validate manifest and file URLs"
-        # curl -f https://patches.canartworks.com/manifests/1.0.0.json
-        # curl -f https://patches.canartworks.com/channels/stable.json
+        echo "Validate manifest and file URLs for version $VERSION"

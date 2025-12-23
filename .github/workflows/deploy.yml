@@ -24,8 +24,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
     - name: Set up Rust
       uses: dtolnay/rust-toolchain@stable
+
+    - name: Install frontend deps
+      run: |
+        cd launcher
+        npm install
 
     - name: Build patcher
       run: cd tools/patcher && cargo build --release
@@ -39,6 +49,29 @@ jobs:
           "${{ env.VERSION }}" \
           "${{ env.BUILD_ID }}" \
           "../releases/build_outputs/${{ env.VERSION }}"
+
+    - name: Build Tauri bundles
+      run: |
+        cd launcher
+        npm run tauri build
+
+    - name: Upload Tauri artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tauri-bundles-${{ env.VERSION }}
+        path: launcher/src-tauri/target/release/bundle/**/*
+
+    - name: Publish GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ env.VERSION }}
+        name: CanartWorks Launcher v${{ env.VERSION }}
+        body: |
+          Automated build for version ${{ env.VERSION }} (build ID: ${{ env.BUILD_ID }}).
+          Bundles include MSI/NSIS installers and other Tauri artifacts.
+        files: launcher/src-tauri/target/release/bundle/**/*
+        draft: false
+        prerelease: false
 
     - name: Validate deployment
       run: |

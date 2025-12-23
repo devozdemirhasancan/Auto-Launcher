@@ -108,13 +108,13 @@ Features:
 - Triggered on `push` to `main` or manually (`workflow_dispatch`).
 - Inputs: `version`, `build_id` (with defaults).
 - Steps:
-  1. Checkout + install Rust
-  2. Build `tools/patcher` once
-  3. Run patcher with `../releases/build_outputs/<version>`
-  4. Leave artifacts in `releases/` for manual upload (e.g., via `tools/deployer`)
-  5. Echo reminder to run the deployer CLI
-
-**Note:** Automated server upload is intentionally disabled; use the Windows deployer CLI (or Termius/SCP) to push files after reviewing the artifacts.
+  1. Checkout repo
+  2. Install Node 18 + npm dependencies
+  3. Install Rust toolchain
+  4. Build `tools/patcher` + run manifest generation
+  5. Execute `npm run tauri build` to create MSI/NSIS bundles
+  6. Upload `launcher/src-tauri/target/release/bundle/**` as workflow artifacts and publish a GitHub Release tagged `v<version>`
+  7. Echo reminder to run the deployer CLI for server-side upload
 
 ---
 

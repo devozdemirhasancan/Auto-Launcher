@@ -1,0 +1,11 @@
+/launcher/dist
+/launcher/src-tauri/target
+/launcher/node_modules
+/.env
+*.log
+/tools/deployer/.venv
+/tools/deployer/config.json
+/tools/patcher/target
+/releases/build_outputs/
+/releases/manifests/
+/releases/channels/

@@ -1,0 +1,33 @@
+{
+  "app_id": "CanartWorks",
+  "channel": "stable",
+  "version": "1.0.0",
+  "build_id": "build123",
+  "created_at": "2025-12-23T01:38:21.657526+00:00",
+  "files": [
+    {
+      "path": "data.txt",
+      "size": 17,
+      "sha256": "1babf0d99f736d482fe392faca8234b3d62070a22cf596748b5eaac41af596e9",
+      "url": "/files/1.0.0/1babf0d99f736d482fe392faca8234b3d62070a22cf596748b5eaac41af596e9/data.txt",
+      "executable_flag": false,
+      "permissions": "644"
+    },
+    {
+      "path": "game.exe",
+      "size": 38,
+      "sha256": "b56c7bdfc6f1d99ff609b357a9a33ace1f0d154271497b33e1ab00312a699775",
+      "url": "/files/1.0.0/b56c7bdfc6f1d99ff609b357a9a33ace1f0d154271497b33e1ab00312a699775/game.exe",
+      "executable_flag": true,
+      "permissions": "755"
+    },
+    {
+      "path": "lib.dll",
+      "size": 22,
+      "sha256": "05b385339023f083f64249d2f107ff472a12ef5c195e5736f074a19414a200c4",
+      "url": "/files/1.0.0/05b385339023f083f64249d2f107ff472a12ef5c195e5736f074a19414a200c4/lib.dll",
+      "executable_flag": true,
+      "permissions": "755"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+name: Deploy Patch
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Build patcher
+      run: cd tools/patcher && cargo build --release
+
+    - name: Generate patch (example)
+      run: cd tools/patcher && ./target/release/patcher CanartWorks stable ${{ env.VERSION }} ${{ env.BUILD_ID }} releases/build_outputs/${{ env.VERSION }}
+
+    - name: Upload to patch server
+      run: |
+        # Example using scp; replace with rsync or SSH action as needed
+        scp -o StrictHostKeyChecking=no -r releases/manifests/* root@31.57.154.32:/var/www/patcher/manifests/
+        scp -o StrictHostKeyChecking=no -r releases/channels/* root@31.57.154.32:/var/www/patcher/channels/
+        scp -o StrictHostKeyChecking=no -r releases/build_outputs/${{ env.VERSION }}/* root@31.57.154.32:/var/www/patcher/files/${{ env.VERSION }}/
+
+    - name: Validate deployment
+      run: |
+        # Check if URLs are reachable
+        echo "Validate manifest and file URLs"
+        # curl -f https://patches.canartworks.com/manifests/1.0.0.json
+        # curl -f https://patches.canartworks.com/channels/stable.json

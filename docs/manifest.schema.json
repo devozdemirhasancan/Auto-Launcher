@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "app_id": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["stable", "beta", "dev"]
+    },
+    "version": {
+      "type": "string"
+    },
+    "build_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "executable_flag": {
+            "type": "boolean"
+          },
+          "permissions": {
+            "type": "string"
+          }
+        },
+        "required": ["path", "size", "sha256", "url"]
+      }
+    },
+    "signature": {
+      "type": "string"
+    }
+  },
+  "required": ["app_id", "channel", "version", "build_id", "created_at", "files"]
+}

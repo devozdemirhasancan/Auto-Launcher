@@ -1,0 +1,15 @@
+{
+  "host": "",
+  "username": "",
+  "password": "",
+  "key_path": "",
+  "remote_root": "/var/www/patcher",
+  "channel": "stable",
+  "app_id": "CanartWorks",
+  "build_outputs_dir": "../../releases/build_outputs",
+  "manifests_dir": "../../releases/manifests",
+  "channels_dir": "../../releases/channels",
+  "patcher_dir": "../patcher",
+  "default_version": "1.0.0",
+  "default_build_id": "build000"
+}

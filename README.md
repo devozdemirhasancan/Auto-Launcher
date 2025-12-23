@@ -111,12 +111,10 @@ Features:
   1. Checkout + install Rust
   2. Build `tools/patcher` once
   3. Run patcher with `../releases/build_outputs/<version>`
-  4. Upload manifests/channels/files via `scp` (replace with rsync/action if desired)
-  5. Placeholder for URL validation
+  4. Leave artifacts in `releases/` for manual upload (e.g., via `tools/deployer`)
+  5. Echo reminder to run the deployer CLI
 
-Secrets to configure:
-- SSH private key or password for `root@patcher host`.
-- Optional: use `appleboy/scp-action` or similar to avoid inline passwords.
+**Note:** Automated server upload is intentionally disabled; use the Windows deployer CLI (or Termius/SCP) to push files after reviewing the artifacts.
 
 ---
 

@@ -40,13 +40,6 @@ jobs:
           "${{ env.BUILD_ID }}" \
           "../releases/build_outputs/${{ env.VERSION }}"
 
-    - name: Upload to patch server
-      run: |
-        # Example using scp; replace with rsync or SSH action as needed
-        scp -o StrictHostKeyChecking=no -r releases/manifests/* root@31.57.154.32:/var/www/patcher/manifests/
-        scp -o StrictHostKeyChecking=no -r releases/channels/* root@31.57.154.32:/var/www/patcher/channels/
-        scp -o StrictHostKeyChecking=no -r releases/build_outputs/${{ env.VERSION }}/* root@31.57.154.32:/var/www/patcher/files/${{ env.VERSION }}/
-
     - name: Validate deployment
       run: |
-        echo "Validate manifest and file URLs for version $VERSION"
+        echo "Artifacts ready under releases/ for version $VERSION. Deploy manually via tools/deployer CLI."
